@@ -13,7 +13,7 @@ function Signup() {
     const user = { user: data }
     apiUserSignUp(user).then(res => {
       MySwal.fire({
-        title: res.message,
+        title: res.data.message,
         timer: 2000,
         timerProgressBar: true,
       }).then(() => {

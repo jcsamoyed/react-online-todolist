@@ -6,7 +6,7 @@ export const request = axios.create({
 
 request.interceptors.response.use(
   function (config) {
-    return config.data;
+    return config;
   },
   function (error) {
     return Promise.reject(error.response.data);

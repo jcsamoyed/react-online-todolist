@@ -1,11 +1,34 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { apiUserSignIn } from '@/utils/api';
+
+const MySwal = withReactContent(Swal)
 
 function Login() {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const navigate = useNavigate();
 
-  console.log(watch("email")); // watch input value by passing the name of it
+  const onSubmit = (data) => {
+    const user = { user: data }
+    apiUserSignIn(user).then(res => {
+      console.log(res);
+      MySwal.fire({
+        title: res.data.message,
+        timer: 2000,
+        timerProgressBar: true,
+      }).then(() => {
+        navigate('/todo-list');
+      })
+    }).catch(err => {
+      MySwal.fire({
+        title: err.error,
+        timer: 2000,
+        timerProgressBar: true,
+      })
+    })
+  }
 
   return (
     <div className="w-full md:w-6/12">
@@ -37,4 +60,5 @@ function Login() {
     </div>
   )
 }
+
 export default Login;
