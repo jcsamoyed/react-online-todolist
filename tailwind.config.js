@@ -4,11 +4,16 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    colors: {
-      yello: '#FFD370',
-      black: '#333'
+    extend: {
+      colors: {
+        yello: '#FFD370',
+        black: '#333',
+        red: '#D87355'
+      },
+      borderRadius: {
+        DEFAULT: '10px',
+      },
     },
-    extend: {},
   },
   plugins: [],
 }
