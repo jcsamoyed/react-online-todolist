@@ -1,11 +1,32 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { apiUserSignUp } from '@/utils/api';
+
+const MySwal = withReactContent(Swal)
 
 function Signup() {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
-
-  console.log(watch("email")); // watch input value by passing the name of it
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const navigate = useNavigate();
+  const onSubmit = (data) => {
+    const user = { user: data }
+    apiUserSignUp(user).then(res => {
+      MySwal.fire({
+        title: res.message,
+        timer: 2000,
+        timerProgressBar: true,
+      }).then(() => {
+        navigate('/');
+      })
+    }).catch(err => {
+      MySwal.fire({
+        title: err.error,
+        timer: 2000,
+        timerProgressBar: true,
+      })
+    })
+  }
 
   return (
     <div className="w-full md:w-6/12">
@@ -36,7 +57,8 @@ function Signup() {
             required: { value: true, message: "此欄位不可為空" },
           })}
             className="block w-full my-1 px-4 py-3 text-base font-medium rounded"
-            placeholder="請輸入密碼" />
+            placeholder="請輸入密碼"
+            type="password" />
           <p className="text-red">{errors.password?.message}</p>
         </label>
         <label className="block text-sm font-bold">再次輸入密碼
@@ -44,7 +66,8 @@ function Signup() {
             required: { value: true, message: "此欄位不可為空" },
           })}
             className="block w-full my-1 px-4 py-3 text-base font-medium rounded"
-            placeholder="請再次輸入密碼" />
+            placeholder="請再次輸入密碼"
+            type="password" />
           <p className="text-red">{errors.password?.message}</p>
         </label>
         <button type="submit" className="block bg-black text-white py-3 px-12 rounded mx-auto mt-6">註冊帳號</button>
