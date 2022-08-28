@@ -10,9 +10,10 @@ import { AuthContext } from "./components/Context";
 
 function App() {
   const [token, setToken] = useState(null);
+  const [nickname, setNickname] = useState({});
   const authContextValue = {
-    token,
-    setToken
+    token, setToken,
+    nickname, setNickname
   };
 
   return (

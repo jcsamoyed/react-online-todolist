@@ -10,13 +10,15 @@ const MySwal = withReactContent(Swal)
 
 function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const { setToken } = useContext(AuthContext);
+  const { setToken, setNickname } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
     const user = { user: data }
     apiUserSignIn(user).then(res => {
+      sessionStorage.setItem('token', res.headers.authorization)
       setToken(res.headers.authorization)
+      setNickname(res.data.nickname)
       MySwal.fire({
         title: res.data.message,
         timer: 2000,
@@ -41,6 +43,7 @@ function Login() {
           <input {...register("email", {
             required: { value: true, message: "此欄位不可為空" },
             pattern: {
+              // eslint-disable-next-line
               value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
               message: "請輸入正確的 Email"
             }

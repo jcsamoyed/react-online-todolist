@@ -1,6 +1,10 @@
+import Navbar from "@/components/Navbar";
+
 function TodoList() {
   return (
-    <p>todo list</p>
+    <div className="bg-half min-h-screen px-8">
+      <Navbar />
+    </div>
   )
 }
 

@@ -36,6 +36,7 @@ function Signup() {
           <input {...register("email", {
             required: { value: true, message: "此欄位不可為空" },
             pattern: {
+              // eslint-disable-next-line
               value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
               message: "請輸入正確的 Email"
             }
