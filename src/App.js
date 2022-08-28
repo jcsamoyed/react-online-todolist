@@ -1,6 +1,6 @@
 import { Routes, Route, Outlet } from "react-router-dom";
 import './App.css';
-import Layout from "./components/Layout";
+import IndexLayout from "./components/IndexLayout";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -11,7 +11,7 @@ function App() {
     <div className="App">
       <Outlet />
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<IndexLayout />}>
           <Route index element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NotFound />} />
