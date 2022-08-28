@@ -3,17 +3,20 @@ import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { apiUserSignIn } from '@/utils/api';
+import { useContext } from "react";
+import { AuthContext } from "../components/Context";
 
 const MySwal = withReactContent(Swal)
 
 function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const { setToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
     const user = { user: data }
     apiUserSignIn(user).then(res => {
-      console.log(res);
+      setToken(res.headers.authorization)
       MySwal.fire({
         title: res.data.message,
         timer: 2000,
