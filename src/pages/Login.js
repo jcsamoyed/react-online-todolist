@@ -28,7 +28,7 @@ function Login() {
       })
     }).catch(err => {
       MySwal.fire({
-        title: err.error,
+        title: err.message,
         timer: 2000,
         timerProgressBar: true,
       })
@@ -57,7 +57,8 @@ function Login() {
             required: { value: true, message: "此欄位不可為空" },
           })}
             className="block w-full my-1 px-4 py-3 text-base font-medium rounded"
-            placeholder="請輸入密碼" />
+            placeholder="請輸入密碼"
+            type="password" />
           <p className="text-red">{errors.password?.message}</p>
         </label>
         <button type="submit" className="block bg-black text-white py-3 px-12 rounded mx-auto mt-6">登入</button>
