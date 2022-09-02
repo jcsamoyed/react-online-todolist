@@ -5,6 +5,7 @@ import { apiGetTodos, apiPostTodos, apiDeleteTodos, apiToggleTodos } from "@/uti
 function TodoList() {
   const [todos, setTodos] = useState([]);
   const [content, setContent] = useState('');
+  const [activePage, setActivePage] = useState('全部');
 
   const renderTodos = () => {
     apiGetTodos().then((res) => {
@@ -51,6 +52,16 @@ function TodoList() {
       })
   }
 
+  const changeActiveList = (value) => {
+    setActivePage(value);
+  }
+
+  const filterTodos = (activePage === '全部')
+    ? todos
+    : (activePage === '待完成')
+      ? todos.filter(item => item.completed_at === null)
+      : todos.filter(item => item.completed_at !== null)
+
   return (
     <div className="bg-half min-h-screen px-8">
       <Navbar />
@@ -66,15 +77,15 @@ function TodoList() {
         <div className="bg-white rounded text-sm shadow-lg">
           {/* 狀態頁籤 */}
           <div className="flex justify-between">
-            <div className="w-1/3 text-center font-bold text-black py-4 border-b-2 border-black cursor-pointer">全部</div>
-            <div className="w-1/3 text-center font-bold text-gray-400 py-4 border-b-2 border-gray-100 cursor-pointer">待完成</div>
-            <div className="w-1/3 text-center font-bold text-gray-400 py-4 border-b-2 border-gray-100 cursor-pointer">已完成</div>
+            <div onClick={() => changeActiveList('全部')} className={"w-1/3 text-center font-bold py-4 border-b-2 cursor-pointer" + (activePage === '全部' ? 'text-black border-black' : ' text-gray-400 border-gray-100')}>全部</div>
+            <div onClick={() => changeActiveList('待完成')} className={"w-1/3 text-center font-bold py-4 border-b-2 cursor-pointer" + (activePage === '待完成' ? 'text-black border-black' : ' text-gray-400 border-gray-100')}>待完成</div>
+            <div onClick={() => changeActiveList('已完成')} className={"w-1/3 text-center font-bold py-4 border-b-2 cursor-pointer" + (activePage === '已完成' ? 'text-black border-black' : ' text-gray-400 border-gray-100')}>已完成</div>
           </div>
           {/* 列表 */}
           <div className="py-2 px-6">
             <ul>
               {
-                todos.map((item) => {
+                filterTodos.map((item) => {
                   return (
                     <li key={item.id} className="group relative border-b border-gray-100">
                       <label className="flex items-center py-4 cursor-pointer">
