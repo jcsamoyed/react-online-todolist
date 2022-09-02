@@ -52,6 +52,15 @@ function TodoList() {
       })
   }
 
+  const handleDeleteAllDone = () => {
+    const doneList = todos.filter((item) => {
+      return item.completed_at;
+    })
+    doneList.forEach((item) => {
+      handleDeleteItem(item.id)
+    })
+  }
+
   const changeActiveList = (value) => {
     setActivePage(value);
   }
@@ -100,8 +109,8 @@ function TodoList() {
             </ul>
             {/* 表尾 */}
             <div className="flex justify-between py-4">
-              <span>5 個待完成項目</span>
-              <div className="text-gray-400 cursor-pointer">清除已完成項目</div>
+              <span>{todos.filter(item => item.completed_at === null).length} 個待完成項目</span>
+              <div onClick={handleDeleteAllDone} className="text-gray-400 cursor-pointer">清除已完成項目</div>
             </div>
           </div>
         </div>
