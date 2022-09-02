@@ -28,7 +28,7 @@ function Login() {
       })
     }).catch(err => {
       MySwal.fire({
-        title: err.message,
+        title: err.error,
         timer: 2000,
         timerProgressBar: true,
       })
