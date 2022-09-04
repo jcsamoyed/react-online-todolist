@@ -21,7 +21,7 @@ function Login() {
       setNickname(res.data.nickname)
       MySwal.fire({
         title: res.data.message,
-        timer: 2000,
+        timer: 1000,
         timerProgressBar: true,
       }).then(() => {
         navigate('/todo-list');
@@ -29,7 +29,7 @@ function Login() {
     }).catch(err => {
       MySwal.fire({
         title: err.error,
-        timer: 2000,
+        timer: 1000,
         timerProgressBar: true,
       })
     })

@@ -14,7 +14,7 @@ function Signup() {
     apiUserSignUp(user).then(res => {
       MySwal.fire({
         title: res.data.message,
-        timer: 2000,
+        timer: 1000,
         timerProgressBar: true,
       }).then(() => {
         navigate('/');
@@ -22,7 +22,7 @@ function Signup() {
     }).catch(err => {
       MySwal.fire({
         title: err.error,
-        timer: 2000,
+        timer: 1000,
         timerProgressBar: true,
       })
     })

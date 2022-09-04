@@ -1,7 +1,11 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import { AuthContext } from './Context';
 import { apiUserSignOut } from '@/utils/api'
+
+const MySwal = withReactContent(Swal)
 
 function Navbar() {
   const { setToken, nickname, setNickname } = useContext(AuthContext);
@@ -9,10 +13,16 @@ function Navbar() {
 
   const handleSignOut = () => {
     apiUserSignOut().then((res) => {
-      sessionStorage.removeItem('token');
-      setToken('');
-      setNickname('');
-      navigate('/');
+      MySwal.fire({
+        title: res.data.message,
+        timer: 1000,
+        timerProgressBar: true,
+      }).then(() => {
+        sessionStorage.removeItem('token');
+        setToken('');
+        setNickname('');
+        navigate('/');
+      })
     }).catch((err) => {
       console.log(err);
     })
