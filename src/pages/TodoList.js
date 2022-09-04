@@ -83,37 +83,45 @@ function TodoList() {
           </div>
         </div>
         {/* 代辦清單 */}
-        <div className="bg-white rounded text-sm shadow-lg">
-          {/* 狀態頁籤 */}
-          <div className="flex justify-between">
-            <div onClick={() => changeActiveList('全部')} className={"w-1/3 text-center font-bold py-4 border-b-2 cursor-pointer" + (activePage === '全部' ? 'text-black border-black' : ' text-gray-400 border-gray-100')}>全部</div>
-            <div onClick={() => changeActiveList('待完成')} className={"w-1/3 text-center font-bold py-4 border-b-2 cursor-pointer" + (activePage === '待完成' ? 'text-black border-black' : ' text-gray-400 border-gray-100')}>待完成</div>
-            <div onClick={() => changeActiveList('已完成')} className={"w-1/3 text-center font-bold py-4 border-b-2 cursor-pointer" + (activePage === '已完成' ? 'text-black border-black' : ' text-gray-400 border-gray-100')}>已完成</div>
-          </div>
-          {/* 列表 */}
-          <div className="py-2 px-6">
-            <ul>
-              {
-                filterTodos.map((item) => {
-                  return (
-                    <li key={item.id} className="group relative border-b border-gray-100">
-                      <label className="flex items-center py-4 cursor-pointer">
-                        <input className="mr-4 w-5 h-5" type="checkbox" defaultChecked={item.completed_at} onChange={() => handleToggleItem(item.id)} />
-                        <span className={item.completed_at ? 'text-gray-400 line-through' : ''}>{item.content}</span>
-                      </label>
-                      <img src={require('@/assets/images/delete.png')} alt="x" onClick={() => handleDeleteItem(item.id)} className="hidden absolute group-hover:block right-0 top-5 cursor-pointer" />
-                    </li>
-                  )
-                })
-              }
-            </ul>
-            {/* 表尾 */}
-            <div className="flex justify-between py-4">
-              <span>{todos.filter(item => item.completed_at === null).length} 個待完成項目</span>
-              <div onClick={handleDeleteAllDone} className="text-gray-400 cursor-pointer">清除已完成項目</div>
+        {
+          todos.length ?
+            <div className="bg-white rounded text-sm shadow-lg">
+              {/* 狀態頁籤 */}
+              <div className="flex justify-between">
+                <div onClick={() => changeActiveList('全部')} className={"w-1/3 text-center font-bold py-4 border-b-2 cursor-pointer" + (activePage === '全部' ? 'text-black border-black' : ' text-gray-400 border-gray-100')}>全部</div>
+                <div onClick={() => changeActiveList('待完成')} className={"w-1/3 text-center font-bold py-4 border-b-2 cursor-pointer" + (activePage === '待完成' ? 'text-black border-black' : ' text-gray-400 border-gray-100')}>待完成</div>
+                <div onClick={() => changeActiveList('已完成')} className={"w-1/3 text-center font-bold py-4 border-b-2 cursor-pointer" + (activePage === '已完成' ? 'text-black border-black' : ' text-gray-400 border-gray-100')}>已完成</div>
+              </div>
+              {/* 列表 */}
+              <div className="py-2 px-6">
+                <ul>
+                  {
+                    filterTodos.map((item) => {
+                      return (
+                        <li key={item.id} className="group relative border-b border-gray-100">
+                          <label className="flex items-center py-4 cursor-pointer">
+                            <input className="mr-4 w-5 h-5" type="checkbox" defaultChecked={item.completed_at} onChange={() => handleToggleItem(item.id)} />
+                            <span className={item.completed_at ? 'text-gray-400 line-through' : ''}>{item.content}</span>
+                          </label>
+                          <img src={require('@/assets/images/delete.png')} alt="x" onClick={() => handleDeleteItem(item.id)} className="hidden absolute group-hover:block right-0 top-5 cursor-pointer" />
+                        </li>
+                      )
+                    })
+                  }
+                </ul>
+                {/* 表尾 */}
+                <div className="flex justify-between py-4">
+                  <span>{todos.filter(item => item.completed_at === null).length} 個待完成項目</span>
+                  <div onClick={handleDeleteAllDone} className="text-gray-400 cursor-pointer">清除已完成項目</div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+            :
+            <div className="mt-10">
+              <p className="text-center mt-10">目前尚無待辦事項</p>
+              <img src={require('@/assets/images/empty.png')} className="mt-4 mx-auto" alt="目前尚無待辦事項" />
+            </div>
+        }
       </div>
     </div>
   )
