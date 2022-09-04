@@ -7,7 +7,7 @@ import { apiUserSignUp } from '@/utils/api';
 const MySwal = withReactContent(Swal)
 
 function Signup() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors }, watch } = useForm();
   const navigate = useNavigate();
   const onSubmit = (data) => {
     const user = { user: data }
@@ -56,6 +56,10 @@ function Signup() {
         <label className="block text-sm font-bold mb-4">密碼
           <input {...register("password", {
             required: { value: true, message: "此欄位不可為空" },
+            minLength: {
+              value: 6,
+              message: "密碼至少為 6 碼"
+            }
           })}
             className="block w-full my-1 px-4 py-3 text-base font-medium rounded"
             placeholder="請輸入密碼"
@@ -63,13 +67,18 @@ function Signup() {
           <p className="text-red">{errors.password?.message}</p>
         </label>
         <label className="block text-sm font-bold">再次輸入密碼
-          <input {...register("password", {
+          <input {...register("passwordConfirm", {
             required: { value: true, message: "此欄位不可為空" },
+            validate: value => {
+              if (watch('password') !== value) {
+                return '兩次輸入的密碼不同'
+              }
+            }
           })}
             className="block w-full my-1 px-4 py-3 text-base font-medium rounded"
             placeholder="請再次輸入密碼"
             type="password" />
-          <p className="text-red">{errors.password?.message}</p>
+          <p className="text-red">{errors.passwordConfirm?.message}</p>
         </label>
         <button type="submit" className="block bg-black text-white py-3 px-12 rounded mx-auto mt-6">註冊帳號</button>
       </form>
